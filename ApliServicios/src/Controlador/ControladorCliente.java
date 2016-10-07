@@ -1,6 +1,6 @@
 
 package Controlador;
-
+import Modelo.Cliente;
 import Modelo.Lista;
 import Vista.JFrameCliente;
 import Vista.JFrameGuardaCliente;
@@ -24,9 +24,9 @@ public class ControladorCliente implements ActionListener,KeyListener
        formCliente = new JFrameCliente();
        formCliente.agregarListener(this);
        formCliente.setVisible(true);
-       formCliente.getBntNuevoCliente().setVisible(false);
-       formCliente.getBntModificar().setVisible(false);
-      formCliente.getBntBorrar().setVisible(false);
+      // formCliente.getBntNuevoCliente().setVisible(false);
+      // formCliente.getBntModificar().setVisible(false);
+      //formCliente.getBntBorrar().setVisible(false);
        //cargarCliente();
        
          //Zona de los KeyListener
@@ -96,11 +96,40 @@ public class ControladorCliente implements ActionListener,KeyListener
             e.consume();
     }
     
+    
+     private void cargarCliente()
+    {
+         int Fila;  
+         Cliente cliente=new Cliente();
+  
+         for (Fila=0;Fila<ListaCliente.getListaCliente().size();Fila++)
+        {
+            cliente=ListaCliente.getListaCliente().get(Fila);
+            formCliente.getTCliente().setValueAt(cliente.getRif(), Fila, 0);
+            formCliente.getTCliente().setValueAt(cliente.getRazonSocial(), Fila,1);    
+        }
+    }
+    
 
     @Override
-    public void actionPerformed(ActionEvent ae) 
+    public void actionPerformed(ActionEvent e) 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+           if (e.getSource().equals(formCliente.getBntNuevoCliente()))  
+      {  
+          new ControladorGuardarCliente( );
+          formCliente.dispose();
+      }   
+        if (e.getSource().equals(formCliente.getBntRegresar()))  
+      {  
+        formCliente.dispose();
+      }
+        if (e.getSource().equals(formCliente.getBntModificar()))  
+      {  
+        
+          new ControladorGuardarCliente();
+         // CargarModificar();
+        
+      }
     }
 
     @Override
